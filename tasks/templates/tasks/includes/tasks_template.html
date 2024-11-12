@@ -1,0 +1,20 @@
+{% comment %} {% user_tasks request as tasks %} {% endcomment %}
+{% for task in tasks %}
+    <div class="todo-list-item">
+        <div class="task-text">
+            <p class="{% if task.is_done %}text-decoration-line-through{% endif %}">{{ task.text }}</p>
+            <p class="task-date">{{ task.date }}</p>
+        </div>
+        <div class="task-buttons">
+            <a class="task-is-done-update" href="{% url "tasks:update_task" %}" data-task-is-done="{{ task.is_done }}" data-task-id="{{ task.id }}" >{% csrf_token %}
+                <label class="checkbox task-button" for="{{ task.id }}">
+                    <input type="checkbox" name="color" {% if task.is_done %}checked{% endif %} id="{{ task.id }}">
+                    <span class="checkmark"></span>
+                </label>
+            </a>
+            <a href="{% url "tasks:delete_task" %}" class="button task-button remove-task"
+            data-task-id="{{ task.id }}">{% csrf_token %}Удалить</a>
+            <input type="hidden" name="{{ task.id }}">
+        </div>
+    </div>
+{% endfor %}
