@@ -41,6 +41,7 @@
                 <div class="todo-list" id="todo-list-id">
                     <!-- Разметка задач -->
                     {% include "tasks/includes/tasks_template.html" %}
+                    <input type="hidden" name="q" value={{ request.GET.q }} id="q-id">
                     <!-- Конец разметки задач -->
                 </div>
 
@@ -51,7 +52,7 @@
                         {% if form.text.errors %}
                             <p>{{ form.text.errors }}</p>
                         {% endif %}
-                        <input class="task-date add-task-date-input" type="text" placeholder="Дата задачи {dd:mm:yy}" name="date" value="{% if form.date.value %}{{ form.date.value }} {% else %}{{ current_date }}{% endif %}" required>
+                        <input class="task-date add-task-date-input" type="date" placeholder="Дата задачи {dd:mm:yy}" name="date" value="{% if form.date.value %}{{ form.date.value }} {% else %}{{ current_date }}{% endif %}" required>
                         <input type="hidden" name="session_key" value="{{ request.session.session_key }}">
                         {% if form.date.errors %}
                             <p>{{ form.date.errors }}</p>

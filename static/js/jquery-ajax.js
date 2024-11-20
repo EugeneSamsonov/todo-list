@@ -39,7 +39,6 @@ $(document).ready(function () {
         var task_is_done = $(this).data("task-is-done");
         // Из атрибута href берем ссылку на контроллер django
         var update_task = $(this).attr("href");
-
         // делаем post запрос через ajax не перезагружая страницу
         $.ajax({
             type: "POST",

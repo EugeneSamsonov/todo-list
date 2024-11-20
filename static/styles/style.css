@@ -17,22 +17,35 @@ h1 {
 
 .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
 
-    padding: 25px;
-}
-
-.header>a {
-    display: flex;
-    text-decoration: none;
-
-    float: right;
+    padding: 10px 10px 10px 10px;
+    width: 100%;
 }
 
 .indent {
-    width: 10%;
+    width: 100px;
 }
+
+.nav-link {
+    display: inline-block;
+    color: #E7E7DE;
+    background-color: #008891;
+    border: #008891 1px solid;
+    padding: 10px 15px 10px 15px;
+
+    border-radius: 20px;
+    transition: 0.3s ease-in-out;
+
+    margin-top: 5px;
+}
+
+.nav-link:hover {
+    color: #008891;
+    background-color: #E7E7DE;
+}   
 
 input[type=button], input[type=submit], input[type=reset],
 .button {
@@ -57,6 +70,82 @@ input[type=submit], input[type=reset] {
     background-color: #E7E7DE;
 }
 
+.profile-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+/* Выпадающее меню */
+
+.profile-menu {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    background-color: #E7E7DE;
+    border: #008891 2px solid;
+
+    width: 500px;
+    border-radius: 20px;
+    height: auto;
+    transition: 0.3s ease-in-out;
+
+    padding: 1%;
+}
+
+.main-profile:hover .profile-menu {
+    transition: 0.3s ease-in-out;
+    opacity: 1;
+    visibility: visible;
+}
+
+.profile-content,
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.menu-container>h2 {
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-content>a {
+    width: 30%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.profile-input {
+    margin: 5px 0 5px 0;
+    width: 60%;
+    align-self: center;
+    border: #E7E7DE 1px solid;
+    transition: 0.3s ease-in-out;
+}
+
+.profile-input:focus,
+.profile-input:hover {
+    margin: 5px 0 5px 0;
+    align-self: center;
+    border-bottom: #008891 1px solid;
+}
+
+.profile-contol-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 10px;
+}
+
+/* Конец выпадающего меню */
 .main {
     display: flex;
     align-items: center;
@@ -277,6 +366,116 @@ input[type=submit], input[type=reset] {
 
 .add-task-inputs>input {
     margin: 5px 0 5px 0;
+}
+
+.search-highlight {
+    background-color: #008891;
+    color: #E7E7DE;
+}
+
+/* login/sign in styles */
+
+.log-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-top: 50px;
+    width: 500px;
+    gap: 20px;
+}
+
+.reg-form,
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-top: 50px;
+    gap: 20px;
+}
+
+.form-input {
+    border: #d8d8d0 1px solid;
+    border-radius: 20px;
+    padding: 10px 15px 10px 15px;
+
+    transition: 0.3s ease-in-out;
+    width: 90%;
+    text-align: center;
+}
+
+.form-input:hover,
+.form-input:focus {
+    border: #E7E7DE 1px solid;
+    border-bottom: #008891 1px solid;
+}
+
+.form-input::placeholder {
+    text-align: left;
+    padding-left: 15px;
+}
+
+.login-link {
+    color: #008891;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+    float: left;
+    margin-left: 10px;
+
+    display: flex;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.log-button-submit {
+    width: 25%;
+    margin: auto;
+}
+
+.reg-cointainer {
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+
+    width: 800px;
+    gap: 10px;
+}
+
+/* profile styles */
+
+.profile {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 50px;
+
+    margin: auto;
+    width: 900px;
+    height: 500px;
+
+    padding: 1%;
+
+    border: #008891 2px solid;
+    border-radius: 20px;
+}
+
+.profile>.profile-form {
+    margin-top: 10px;
+    gap: 50px;
+}
+
+.profile>h2 {
+    font-size: 40px;
+    font-weight: bold;
 }
 
 #colors {
