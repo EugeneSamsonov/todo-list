@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<header>
+  <div class="header">
+    <div class="indent"></div>
+    {% if user.image %}
+        <img class="profile-avatar" src="{{ user.image.url }}" alt="avatar" />
+    {% else %}
+        <img class="profile-avatar" src="{% static "images/avatar.png" %}" alt="avatar" />
+    {% endif %}
+    <a class="button" href="{% url "main:index" %}">Главная</a>
+  </div>
+</header>
+{% endblock %}
+
+{% block main %}
+<main>
+  <div class="profile">
+    <h2>Изменить профиль</h2>
+    <form class="profile-form" action="{% url "users:profile" %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+      <div class="reg-cointainer">
+        <input class="form-input" type="text" placeholder="Введите ваш логин" 
+        name="username" value="{{ user.username }}" required/>
+        {% if form.username.errors %}
+          <p>{{ form.username.errors }}</p>
+        {% endif %}
+        <input class="form-input" type="text" placeholder="Введите ваше имя" 
+        name="first_name" value="{{ user.first_name }}" required/>
+        {% if form.first_name.errors %}
+          <p>{{ form.first_name.errors }}</p>
+        {% endif %}
+      </div>
+      <div class="reg-cointainer">
+        <input
+          class="form-input"
+          type="text"
+          placeholder="Введите вашу фамилию"
+          name="last_name" value="{{ user.last_name }}" required
+        />
+        {% if form.last_name.errors %}
+          <p>{{ form.last_name.errors }}</p>
+        {% endif %}
+        <input class="form-input" type="text" placeholder="Введите ваш email" 
+        name="email" value="{{ user.email }}" required/>
+        {% if form.email.errors %}
+          <p>{{ form.email.errors }}</p>
+        {% endif %}
+      </div>
+      {% comment %} <div class="reg-cointainer">
+        <input
+          class="form-input"
+          type="password"
+          placeholder="Введите старый пароль"
+        />
+        <input
+          class="form-input"
+          type="password"
+          placeholder="Введите новый пароль"
+        />
+        <input
+          class="form-input"
+          type="password"
+          placeholder="Повторите новый пароль"
+        />
+      </div> {% endcomment %}
+      <label>
+        Изменить аватарку -
+        <input type="file" name="image" accept="image/*"/>
+      </label>
+      {% if form.image.errors %}
+        <p>{{ form.image.errors }}</p>
+      {% endif %}
+      <div>
+          <button class="button log-button-submit" type="submit">Сохранить</button>
+          <a class="button" href="{% url "users:logout" %}">Выход</a>
+      </div>
+    </form>
+  </div>
+</main>
+{% endblock %}

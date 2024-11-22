@@ -1,6 +1,5 @@
 from django.db.models.manager import BaseManager
 from django.template.loader import render_to_string
-from django.urls import reverse
 
 from main.templatetags.task_tags import get_user_tasks
 from tasks.models import Task

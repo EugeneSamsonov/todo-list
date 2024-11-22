@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class TaskUser(AbstractUser):
-    image = models.ImageField(upload_to='users/images', blank=True, null=True, verbose_name="Аватар")
+    image = models.ImageField(upload_to='users', blank=True, null=True, verbose_name="Аватар")
     
 
     class Meta:

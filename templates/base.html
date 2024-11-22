@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static "styles/reset.css" %}">
+    <link rel="stylesheet" href="{% static "styles/style.css" %}">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=11266&format=png&color=1A1A1A">
+    
+    <!-- Подключение шрифта -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+
+    <title>TodoList - {{ title }}</title>
+</head>
+
+<body>
+    {% block header %}{% endblock  %}
+
+    {% block main %}{% endblock  %}
+    <script src="{% static "js/jquery/jquery-3.7.0.min.js" %}"></script>
+    <script src="{% static "js/jquery-ajax.js" %}"></script>
+    <script src="{% static "js/search.js" %}"></script>
+</body>
+</html>

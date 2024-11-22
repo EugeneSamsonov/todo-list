@@ -1,0 +1,43 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block header %}
+<header>
+  <div class="header">
+    <div class="indent"></div>
+    <a class="button" href="{% url "main:index" %}">Главная</a>
+  </div>
+</header>
+{% endblock %}
+
+{% block main %}
+<main class="log-main">
+  <h1>Войти</h1>
+  <form class="login-form" method="post" action={% url "users:login" %}>
+    {% csrf_token %}
+    <input class="form-input" type="text" placeholder="Логин" name="username"
+    value="{% if form.username.value %}{{ form.username.value }}{% endif %}" required/>
+    {% if form.username.errors %}
+        <p>{{ form.username.errors }}</p>
+    {% endif %}
+    <input class="form-input" type="password" placeholder="Пароль" name="password"
+    value="{% if form.password.value %}{{ form.password.value }}{% endif %}" required/>
+    {% if form.password.errors %}
+        <p>{{ form.password.errors }}</p>
+    {% endif %}
+    <div>
+      <a class="login-link" href="404.html">Забыли пароль?</a>
+      <a class="login-link" href="{% url "users:registration" %}">Создать аккаунт</a>
+    </div>
+    
+    {% if form.non_field_errors %}
+            <p>{{ form.non_field_errors }}</p>
+    {% endif %}
+    
+    {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% endif %}
+    <button class="button log-button-submit" type="submit">Войти</button>
+  </form>
+</main>
+{% endblock %}

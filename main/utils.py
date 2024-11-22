@@ -2,7 +2,6 @@ from django.contrib.postgres.search import (
     SearchVector,
     SearchQuery,
     SearchRank,
-    SearchHeadline
 )
 
 from tasks.models import Task
@@ -20,23 +19,5 @@ def q_search(query):
         .filter(rank__gt=0)
         .order_by("-rank")
     )
-
-    # result.annotate(
-    #     headline=SearchHeadline(
-    #         "text",
-    #         squery,
-    #         start_sel='<span class="search-highlight">',
-    #         stop_sel="</span>",
-    #     ),
-    # )
-
-    # result.annotate(
-    #     bodyline=SearchHeadline(
-    #         "date",
-    #         squery,
-    #         start_sel='<span class="search-highlight">',
-    #         stop_sel="</span>",
-    #     ),
-    # )
 
     return result

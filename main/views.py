@@ -1,6 +1,5 @@
 # from django.shortcuts import render
 from datetime import datetime
-from django.utils import timezone
 from django.views.generic.base import TemplateView
 # Create your views here.
 
@@ -15,13 +14,8 @@ class MainView(TemplateView):
         if request.GET.get("q"):
             context = self.get_context_data(**kwargs)
             q_search_result = q_search(request.GET.get("q"))
-            # if request.user.is_authenticated:
-            #     q_search_result = q_search_result.filter(user_id=request.user.id)
-            # else:
-            #     q_search_result = q_search_result.filter(session_key=request.session.session_key)
             
             context["tasks"] = q_search_result.filter(user_id=request.user.id)
-            # return super().get(request, *args, **kwargs, context=context)
             return self.render_to_response(context)
 
         return super().get(request, *args, **kwargs)
@@ -46,7 +40,11 @@ class MainView(TemplateView):
                 form.instance.session_key = request.session.session_key
 
         if form.is_valid():
-            form.save()
+            # Если задача уже существует то пропускаем, если нет то сохраняем
+            if get_user_tasks(request).filter(text=form.cleaned_data["text"], date=form.cleaned_data["date"]).exists():
+                pass
+            else:
+                form.save()
         else:
             context["form"] = form
 

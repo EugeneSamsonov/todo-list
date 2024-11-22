@@ -1,70 +1,110 @@
+{% extends "base.html" %}
+
 {% load static %}
-{% comment %} {% load task_tags %} {% endcomment %}
 
-
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="{% static "styles/reset.css" %}">
-    <link rel="stylesheet" href="{% static "styles/style.css" %}">
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=11266&format=png&color=1A1A1A">
-    
-    <!-- Подключение шрифта -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
-
-    <title>TodoList - {{ title }}</title>
-</head>
-
-<body>
-    <header>
-        <div class="header">
-            <div class="indent"></div>
-            <h1>Список дел</h1>
-            <a class="button" href="admin/">Войти</a>
-        </div>
-    </header>
-
-    <main>
-        <div class="main">
-
-            <form class="tasks-search" action="{% url "main:search" %}" method="get" >
-                <input class="search-input" type="search" name="q" placeholder="Поиск" id="search-input">
-                <button class="button search-button"><img class="search-image" src="{% static "images/search.png" %}" alt="search"></button>
-            </form>
-
-            <div class="task-main">
-                <div class="todo-list" id="todo-list-id">
-                    <!-- Разметка задач -->
-                    {% include "tasks/includes/tasks_template.html" %}
-                    <input type="hidden" name="q" value={{ request.GET.q }} id="q-id">
-                    <!-- Конец разметки задач -->
-                </div>
-
-                <form class="add-task" method='post' action={% url "main:index" %}>
-                    {% csrf_token %}
-                    <div class="add-task-inputs">
-                        <textarea class="task-text add-task-text-input" type="text" placeholder="Текст задачи" name="text" required>{% if form.text.value %}{{ form.text.value }}{% endif %}</textarea>
-                        {% if form.text.errors %}
-                            <p>{{ form.text.errors }}</p>
-                        {% endif %}
-                        <input class="task-date add-task-date-input" type="date" placeholder="Дата задачи {dd:mm:yy}" name="date" value="{% if form.date.value %}{{ form.date.value }} {% else %}{{ current_date }}{% endif %}" required>
-                        <input type="hidden" name="session_key" value="{{ request.session.session_key }}">
-                        {% if form.date.errors %}
-                            <p>{{ form.date.errors }}</p>
-                        {% endif %}
+{% block header %}
+<header>
+  <div class="header">
+    <div class="indent"></div>
+    <h1 class="header-title">Список дел</h1>
+    <div class="nav-div">
+        {% if user.is_authenticated %}
+        <div class="main-profile">
+            {% if user.image %}
+                <img
+                    class="profile-avatar"
+                    src="{{ user.image.url }}"
+                    alt="avatar"/>
+                {% else %}
+                <img
+                    class="profile-avatar"
+                    src="{% static "images/avatar.png" %}"
+                    alt="avatar"/>
+                {% endif %}
+                <!-- Выпадающее меню -->
+                <div class="profile-menu">
+                <div class="menu-container">
+                    <h2>Профиль</h2>
+                    <div class="profile-content">
+                        <p>Логин - 
+                            {% if user.username %}
+                                {{ user.username }}
+                            {% else %}
+                                Не нашли ваше логин в базе данных
+                            {% endif %}
+                        </p>
+                        <p>Имя - 
+                            {% if user.first_name %}
+                                {{ user.first_name }}
+                            {% else %}
+                                Не нашли ваше имя в базе данных
+                            {% endif %}
+                        </p>
+                        <p>Фамилия - 
+                            {% if user.last_name %}
+                                {{ user.last_name }}
+                            {% else %}
+                                Не нашли вашу фамилию в базе данных
+                            {% endif %}
+                        </p>
+                        <p>Email - 
+                            {% if user.email %}
+                                {{ user.email }}
+                            {% else %}
+                                Не нашли ваш email в базе данных
+                            {% endif %}
+                        </p>
+                        <a class="button" href="{% url "users:profile" %}">Изменить</a>
                     </div>
-                    <button type="submit" class="button">Добавить задачу</button>
-                </form>
+                    <div class="profile-contol-buttons">
+                    <a class="button" href="{% url "admin:index" %}">Админ панель</a>
+                    <a class="button" href="{% url "users:logout" %}">Выход</a>
+                    </div>
+                </div>
+        {% else %}
+            <a class="nav-link" href="{% url "users:login" %}">Войти</a>
+        {% endif %}
+    </div>
+        <!-- Конец выпадающего меню -->
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block main %}
+    <main>
+    <div class="main">
+
+        <form class="tasks-search" action="{% url "main:search" %}" method="get" >
+            <input class="search-input" type="search" name="q" placeholder="Поиск" id="search-input">
+            <button class="button search-button"><img class="search-image" src="{% static "images/search.png" %}" alt="search"></button>
+        </form>
+
+        <div class="task-main">
+            <div class="todo-list" id="todo-list-id">
+                <!-- Разметка задач -->
+                {% include "tasks/includes/tasks_template.html" %}
+                <input type="hidden" name="q" value={{ request.GET.q.value }} id="q-id">
+                <!-- Конец разметки задач -->
             </div>
+
+            <form class="add-task" method='post' action={% url "main:index" %}>
+                {% csrf_token %}
+                <div class="add-task-inputs">
+                    <textarea class="task-text add-task-text-input" type="text" placeholder="Текст задачи" name="text" required>{% if form.text.value %}{{ form.text.value }}{% endif %}</textarea>
+                    {% if form.text.errors %}
+                        <p>{{ form.text.errors }}</p>
+                    {% endif %}
+                    <input class="task-date add-task-date-input" type="date" placeholder="Дата задачи {dd:mm:yy}" name="date" value="{% if form.date.value %}{{ form.date.value }}{% endif %}" required>
+                    <input type="hidden" name="session_key" value="{{ request.session.session_key }}">
+                    {% if form.date.errors %}
+                        <p>{{ form.date.errors }}</p>
+                    {% endif %}
+                </div>
+                <button type="submit" class="button">Добавить задачу</button>
+            </form>
         </div>
+    </div>
     </main>
-    <script src="{% static "js/jquery/jquery-3.7.0.min.js" %}"></script>
-    <script src="{% static "js/jquery-ajax.js" %}"></script>
-    <script src="{% static "js/search.js" %}"></script>
-</body>
-</html>
+{% endblock %}
