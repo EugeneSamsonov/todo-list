@@ -449,6 +449,28 @@ input[type=submit], input[type=reset] {
     gap: 10px;
 }
 
+.login-item-container,
+.form-item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 55%;
+}
+
+.login-item-container {
+    width: 100%;
+}
+
+.login-item-container>ul,
+.form-item-container>ul {
+    margin-top: 15px;
+    /* margin-left: -35px;
+    text-align: center; */
+}
+
+.reg-form>button {
+    margin-top: 20px;
+}
 /* profile styles */
 
 .profile {
@@ -477,6 +499,13 @@ input[type=submit], input[type=reset] {
     font-size: 40px;
     font-weight: bold;
 }
+
+.profile-form-buttons-container {
+    /* margin-top: 90px; */
+    width: 70%;
+}
+
+
 
 #colors {
     color: #0F3057;
