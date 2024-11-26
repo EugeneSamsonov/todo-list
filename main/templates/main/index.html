@@ -57,7 +57,9 @@
                         <a class="button" href="{% url "users:profile" %}">Изменить</a>
                     </div>
                     <div class="profile-contol-buttons">
+                    {% if user.is_staff %}
                     <a class="button" href="{% url "admin:index" %}">Админ панель</a>
+                    {% endif %}
                     <a class="button" href="{% url "users:logout" %}">Выход</a>
                     </div>
                 </div>

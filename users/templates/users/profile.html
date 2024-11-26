@@ -8,7 +8,7 @@
         {% if user.image %}
         <img class="profile-avatar" src="{{ user.image.url }}" alt="avatar" />
         {% else %}
-        <img class="profile-avatar" src="{% static " images/avatar.png" %}" alt="avatar" />
+        <img class="profile-avatar" src="{% static "images/avatar.png" %}" alt="avatar" />
         {% endif %}
         <a class="button" href="{% url "main:index" %}">Главная</a>
     </div>
