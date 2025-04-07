@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:17.4
+    volumes:
+      - ../volumes/pg:/var/lib/postgresql/data
+    restart: always
+    shm_size: 128mb
+    env_file:
+      - .env
+    networks:
+      - localnet
+
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: todo-list
+    container_name: todo-list
+    volumes:
+      - ../volumes/app/media:/app/media
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    networks:
+      - localnet
+      - internet
+    restart: always
+    command: >
+      bash -c "python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8000"
+
+networks:
+  internet:
+    name: internet
+    driver: bridge
+  localnet:
+    name: localnet
+    driver: bridge
